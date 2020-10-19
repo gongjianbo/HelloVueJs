@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Hello Vue</title>
+		<script type="text/javascript" src="../vue/vue.js" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{a}}--{{b}}
+		</div>
+
+		<script type="text/javascript">
+			//创建一个Vue实例
+			//当一个 Vue 实例被创建时，它将 data 对象中的所有的 property 加入到 Vue 的响应式系统中。
+			//当这些数据改变时，视图会进行重渲染。
+			//只有当实例被创建时就已经存在于 data 中的 property 才是响应式的。
+			var data = {
+				a: 'is a'
+			}
+			var vm = new Vue({
+				el: "#app",
+				//双向绑定
+				data: data,
+				//生命周期相关钩子
+				//在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用
+				beforeCreate: function() {
+					console.log('beforeCreate');
+				},
+				//在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测 (data observer)，property 和方法的运算，watch/event 事件回调。
+				//然而，挂载阶段还没开始，$el property 目前尚不可用。
+				created: function() {
+					console.log('created');
+				},
+				//在挂载开始之前被调用：相关的 render 函数首次被调用。
+				beforeMount: function() {
+					console.log('beforeMount');
+				},
+				//实例被挂载后调用，这时 el 被新创建的 vm.$el 替换了。如果根实例挂载到了一个文档内的元素上，当 mounted 被调用时 vm.$el 也在文档内。
+				//注意 mounted 不会保证所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以在 mounted 内部使用 vm.$nextTick：
+				mounted: function() {
+					console.log('mounted');
+				},
+				//数据更新时调用，发生在虚拟 DOM 打补丁之前。这里适合在更新之前访问现有的 DOM，比如手动移除已添加的事件监听器。
+				beforeUpdate: function() {
+					console.log('beforeUpdate');
+				},
+				//由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
+				//当这个钩子被调用时，组件 DOM 已经更新，所以你现在可以执行依赖于 DOM 的操作。然而在大多数情况下，你应该避免在此期间更改状态。如果要相应状态改变，通常最好使用计算属性或 watcher 取而代之。
+				//注意 updated 不会保证所有的子组件也都一起被重绘。如果你希望等到整个视图都重绘完毕，可以在 updated 里使用 vm.$nextTick：
+				updated: function() {
+					console.log('updated');
+				}
+			});
+
+			vm.b = 'is b';
+			//除了数据 property，Vue 实例还暴露了一些有用的实例 property 与方法。
+			//它们都有前缀 $，以便与用户定义的 property 区分开来。
+			vm.$watch('b', function(newVal, oldVal) {
+				console.log(newVal + ' ' + oldVal)
+			});
+
+			//vm.a==data.a
+			//貌似创建后加的属性界面会刷新，但是watch不会触发
+			vm.a = 'update a';
+			vm.b = 'update b';
+		</script>
+	</body>
+</html>
