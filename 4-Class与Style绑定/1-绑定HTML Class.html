@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="../vue/vue.js" charset="UTF-8"></script>
+		<style type="text/css">
+			div {
+				margin: 10px;
+			}
+
+			.mysize {
+				width: 200px;
+				height: 200px;
+			}
+
+			.mybg {
+				background-color: #008000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="mysize" v-bind:class="{mybg:bgenable}"></div>
+			<div v-bind:class="[class1, class2]"></div>
+		</div>
+
+		<script type="text/javascript">
+			//操作元素的 class 列表和内联样式是数据绑定的一个常见需求。
+			//因为它们都是 attribute，所以我们可以用 v-bind 处理它们：只需要通过表达式计算出字符串结果即可。
+			//不过，字符串拼接麻烦且易错。因此，在将 v-bind 用于 class 和 style 时，Vue.js 做了专门的增强。
+			//表达式结果的类型除了字符串之外，还可以是对象或数组。
+			//
+			//我们可以传给 v-bind:class 一个对象，以动态地切换 class：
+			//<div v-bind:class="{ active: isActive }"></div>
+			//上面的语法表示 active 这个 class 存在与否将取决于数据 property isActive 的 truthiness。
+			//你可以在对象中传入更多字段来动态切换多个 class。此外，v-bind:class 指令也可以与普通的 class attribute 共存。
+			//
+			//我们可以把一个数组传给 v-bind:class，以应用一个 class 列表：
+			//<div v-bind:class="[activeClass, errorClass]"></div>
+			//如果你也想根据条件切换列表中的 class，可以用三元表达式：
+			//<div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+			//
+			//用在组件上暂略
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					//bgenable:false
+					bgenable: {
+						mybg: true
+					},
+					class1: 'mysize',
+					class2: 'mybg'
+				}
+			});
+		</script>
+	</body>
+</html>
